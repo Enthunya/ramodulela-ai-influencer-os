@@ -8,7 +8,7 @@ Key goals:
 - Full ownership — no third-party API fees or limits
 - Modular Python code, easy to extend
 - Runs locally or on cheap cloud GPUs
-- Dashboard for generation, editing, and scheduling
+- Dashboard for generation, editing, and scheduling 
 
 ## Features (Roadmap)
 - Character bible + evolving memory
