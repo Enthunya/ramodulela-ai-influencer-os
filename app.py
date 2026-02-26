@@ -1,30 +1,36 @@
-# app.py - AI Influencer OS Dashboard (Starter)
-# Run with: python app.py  (after installing deps and Ollama)
+# app.py - AI Influencer OS Dashboard (Updated with Easy Personality Editing)
 
 import gradio as gr
-from langchain_ollama import OllamaLLM  # pip install langchain-ollama
+from langchain_ollama import OllamaLLM
 from langchain.prompts import PromptTemplate
 
-# Basic character personality (expand this later into a full "bible")
+# ────────────────────────────────────────────────
+# CHARACTER PERSONALITY - Edit this block freely!
+# This is the "brain" of your influencer. Change anything here.
+# ────────────────────────────────────────────────
 CHARACTER_PERSONALITY = """
-You are an energetic, motivational fitness influencer named "Zara Fit".
-You speak in an upbeat, empowering tone, use emojis 💪🔥, short sentences,
-and always end with a call-to-action like "Tag a friend who needs this!".
-Keep responses fun, relatable, and under 150 words.
+You are Zara Fit, a 28-year-old energetic South African fitness influencer from Johannesburg.
+You are confident, empowering, relatable, and always positive.
+Your tone: upbeat, motivational, fun, use emojis 💪🔥✨, short sentences, slang like "fam", "crush it", "let's gooo".
+You speak like you're talking to your best friend in the gym.
+Always end with a call-to-action: "Tag a friend!", "Drop a 🔥 if you're in!", "DM me your progress!".
+Keep scripts under 150 words for Reels/TikTok.
+You love leg day, protein shakes, consistency, and morning workouts.
+Reference Johannesburg/SA culture when it fits (e.g., "Load shedding got you down? Get that endorphin hit anyway!").
 """
+# ────────────────────────────────────────────────
 
-# Simple prompt template for script generation
+# Prompt template (don't edit unless you want advanced changes)
 prompt_template = PromptTemplate.from_template(
     "{personality}\n\nUser request: {user_prompt}\n\nGenerate a short social media script (Reel/TikTok style):"
 )
 
-# Load Ollama model (pull llama3.1 or mistral first: ollama pull llama3.1)
-llm = OllamaLLM(model="llama3.1")  # Change to your preferred model
+# Load Ollama model (make sure you ran `ollama pull llama3.1`)
+llm = OllamaLLM(model="llama3.1")  # or "llama3.1:8b" for smaller/faster
 
-# Main generation function
 def generate_script(user_prompt):
     if not user_prompt.strip():
-        return "Please enter a prompt! 😊"
+        return "Please enter a prompt! 😊 Let's get moving!"
     
     full_prompt = prompt_template.format(
         personality=CHARACTER_PERSONALITY,
@@ -35,30 +41,30 @@ def generate_script(user_prompt):
         response = llm.invoke(full_prompt)
         return response.strip()
     except Exception as e:
-        return f"Error: {str(e)}\nMake sure Ollama is running and model is pulled!"
+        return f"Error connecting to Ollama: {str(e)}\nMake sure Ollama is running (`ollama run llama3.1` in another window)."
 
 # Gradio Interface
-with gr.Blocks(title="AI Influencer OS - Starter Dashboard") as demo:
+with gr.Blocks(title="AI Influencer OS - Zara Fit") as demo:
     gr.Markdown(
         """
-        # AI Influencer OS
-        **Generate scripts for your AI influencer!**
+        # AI Influencer OS – Zara Fit Edition
+        **Generate scripts for your fitness influencer!**
         
-        Enter a topic or idea below (e.g., "Morning motivation workout" or "Protein shake recipe review").
+        Edit the `CHARACTER_PERSONALITY` section in app.py to change her vibe, backstory, tone, or add memory rules.
         """
     )
     
     input_prompt = gr.Textbox(
         label="Your Prompt / Idea",
-        placeholder="E.g., Create a Reel about leg day motivation...",
+        placeholder="E.g., Create a Reel about morning motivation workout...",
         lines=3
     )
     
     generate_btn = gr.Button("Generate Script 🔥")
     
     output = gr.Textbox(
-        label="Generated Script",
-        lines=8,
+        label="Zara Fit's Script",
+        lines=10,
         interactive=False
     )
     
@@ -70,10 +76,11 @@ with gr.Blocks(title="AI Influencer OS - Starter Dashboard") as demo:
     
     gr.Markdown(
         """
-        **Next steps:** Add persistent memory, image generation (Flux), video, lip-sync...
-        Run Ollama first: `ollama run llama3.1`
+        **Tips:**
+        - Run Ollama in another cmd: `ollama run llama3.1`
+        - Next: Add memory so Zara remembers past scripts!
         """
     )
 
 # Launch the app
-demo.launch(share=False)  # share=True for public link (temporary)
+demo.launch(share=False)  # Change to True for temporary public link
