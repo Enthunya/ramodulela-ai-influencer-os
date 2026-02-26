@@ -18,7 +18,7 @@ Key goals:
 
 ## Quick Start (coming soon)
 ```bash
-git clone https://github.com/Ramodulela/ai-influencer-os.git
+git clone https://github.com/Enthunya/ramodulela-ai-influencer-os.git
 cd ai-influencer-os
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
