@@ -2,9 +2,9 @@
 
 import gradio as gr
 from langchain_ollama import OllamaLLM
-from langchain_core.prompts import PromptTemplate  # Correct import - keep this line
+from langchain_core.prompts import PromptTemplate  # ← this is the correct import
 
-# CHARACTER PERSONALITY - Edit freely here
+# CHARACTER PERSONALITY - Edit this block freely
 CHARACTER_PERSONALITY = """
 You are Zara Fit, a 28-year-old energetic South African fitness influencer from Johannesburg.
 You are confident, empowering, relatable, and always positive.
@@ -35,15 +35,14 @@ def generate_script(user_prompt):
         response = llm.invoke(full_prompt)
         return response.strip()
     except Exception as e:
-        return f"Error: {str(e)}\n\nMake sure Ollama is running (`ollama run llama3.1` in another cmd)."
+        return f"Error: {str(e)}\nMake sure Ollama is running (`ollama run llama3.1` in another cmd)."
 
 with gr.Blocks(title="AI Influencer OS - Zara Fit") as demo:
     gr.Markdown(
         """
         # AI Influencer OS – Zara Fit
         **Generate Reels/TikTok scripts!**
-        
-        Edit the CHARACTER_PERSONALITY block in app.py to customize her.
+        Edit CHARACTER_PERSONALITY in app.py to customize her.
         """
     )
     
