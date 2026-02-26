@@ -1,13 +1,10 @@
-# app.py - AI Influencer OS Dashboard (Easy Personality Editing)
+# app.py - AI Influencer OS Dashboard
 
 import gradio as gr
 from langchain_ollama import OllamaLLM
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate   # ← FIXED IMPORT
 
-# ────────────────────────────────────────────────
-# CHARACTER PERSONALITY - EDIT THIS BLOCK ONLY
-# Change name, age, tone, rules, backstory, memory hints, etc.
-# ────────────────────────────────────────────────
+# CHARACTER PERSONALITY - Edit freely here
 CHARACTER_PERSONALITY = """
 You are Zara Fit, a 28-year-old energetic South African fitness influencer from Johannesburg.
 You are confident, empowering, relatable, and always positive.
@@ -17,9 +14,7 @@ Always end with a call-to-action: "Tag a friend!", "Drop a 🔥 if you're in!", 
 Keep scripts under 150 words for Reels/TikTok.
 You love leg day, protein shakes, consistency, and morning workouts.
 Reference Johannesburg/SA culture when it fits (e.g., "Load shedding got you down? Get that endorphin hit anyway!").
-Future memory rule: Remember previous scripts and user feedback. Reference them naturally, e.g., "Like I said last week about squats...".
 """
-# ────────────────────────────────────────────────
 
 prompt_template = PromptTemplate.from_template(
     "{personality}\n\nUser request: {user_prompt}\n\nGenerate a short social media script (Reel/TikTok style):"
@@ -40,15 +35,15 @@ def generate_script(user_prompt):
         response = llm.invoke(full_prompt)
         return response.strip()
     except Exception as e:
-        return f"Error: {str(e)}\n\nMake sure Ollama is running (`ollama run llama3.1` in another cmd window)."
+        return f"Error: {str(e)}\n\nMake sure Ollama is running (`ollama run llama3.1` in another cmd)."
 
 with gr.Blocks(title="AI Influencer OS - Zara Fit") as demo:
     gr.Markdown(
         """
         # AI Influencer OS – Zara Fit
-        **Generate Reels/TikTok scripts for your fitness influencer!**
+        **Generate Reels/TikTok scripts!**
         
-        Edit the `CHARACTER_PERSONALITY` block in app.py to change her vibe, add memory rules, backstory, etc.
+        Edit the `CHARACTER_PERSONALITY` block in app.py to customize her.
         """
     )
     
@@ -74,10 +69,8 @@ with gr.Blocks(title="AI Influencer OS - Zara Fit") as demo:
     
     gr.Markdown(
         """
-        **Tips:**
-        - Run Ollama separately: `ollama run llama3.1`
-        - Next steps: Add long-term memory (ChromaDB), images (Flux), video, auto-posting.
+        **Tips:** Keep Ollama running in another window (`ollama run llama3.1`).
         """
     )
 
-demo.launch(share=False)  # share=True for temporary public link
+demo.launch(share=False)
