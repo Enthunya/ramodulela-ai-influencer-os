@@ -1,0 +1,2 @@
+echo gradio> requirements.txt
+echo langchain-ollama>> requirements.txt
