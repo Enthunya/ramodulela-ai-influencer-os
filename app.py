@@ -2,7 +2,7 @@
 
 import gradio as gr
 from langchain_ollama import OllamaLLM
-from langchain_core.prompts import PromptTemplate   # ← FIXED IMPORT
+from langchain_core.prompts import PromptTemplate  # Correct import - keep this line
 
 # CHARACTER PERSONALITY - Edit freely here
 CHARACTER_PERSONALITY = """
@@ -43,7 +43,7 @@ with gr.Blocks(title="AI Influencer OS - Zara Fit") as demo:
         # AI Influencer OS – Zara Fit
         **Generate Reels/TikTok scripts!**
         
-        Edit the `CHARACTER_PERSONALITY` block in app.py to customize her.
+        Edit the CHARACTER_PERSONALITY block in app.py to customize her.
         """
     )
     
